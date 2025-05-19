@@ -27,7 +27,7 @@ public class ClienteIngesta(ILogger<ClienteIngesta> logger) : IClienteIngesta
     {
         return new StringBuilder(urlIngesta)
             .AppendFormat("&field1={0}", lectura.IdDispositivo)
-            .AppendFormat("&field2={0}", lectura.FechaHora)
+            .AppendFormat("&field2={0}", lectura.FechaHora.ToString("s"))
             .AppendFormat("&field3={0}", lectura.Consumo)
             .AppendFormat("&field4={0}", lectura.Estado)
             .AppendFormat("&field5={0}", lectura.Nombre)

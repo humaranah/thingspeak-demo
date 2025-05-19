@@ -1,0 +1,61 @@
+﻿@page "/mediciones"
+@inject IServicioMonitor Monitor
+
+<PageTitle>Mediciones</PageTitle>
+
+<h1>Registro de mediciones</h1>
+
+<p>En esta sección se muestran las mediciones de consumo registradas por los dispositivos IoT.</p>
+
+@if (!string.IsNullOrEmpty(errorMessage))
+{
+    <div class="alert alert-danger">@errorMessage</div>
+}
+else if (_mediciones.Count == 0)
+{
+    <div class="alert alert-info">No hay mediciones registradas.</div>
+}
+else
+{
+    <p><strong>Total de lecturas:</strong> @_mediciones.Count</p>
+    <table class="table table-striped table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th>#</th>
+                <th>Nombre</th>
+                <th>Fecha</th>
+                <th>Consumo</th>
+                <th>Estado</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var medicion in _mediciones)
+            {
+                <tr>
+                    <td class="text-end">@medicion.IdEntrada</td>
+                    <td>@medicion.Nombre</td>
+                    <td>@medicion.FechaHora.ToString("g")</td>
+                    <td>@medicion.Consumo W</td>
+                    <td>@medicion.Estado</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<Lectura> _mediciones = [];
+    private string? errorMessage;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            _mediciones = await Monitor.ListarLecturas();
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Ha ocurrido un problema obteniendo la información de mediciones!";
+        }
+    }
+}

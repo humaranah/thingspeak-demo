@@ -1,0 +1,59 @@
+﻿@page "/dispositivos"
+@inject IServicioMonitor Monitor
+
+<PageTitle>Dispositivos</PageTitle>
+
+<h1>Dispositivos</h1>
+
+<p>En esta sección se muestran los dispositivos IoT disponibles para monitoreo.</p>
+
+@if (!string.IsNullOrEmpty(errorMessage))
+{
+    <div class="alert alert-danger">@errorMessage</div>
+}
+else if (dispositivos.Count == 0)
+{
+    <div class="alert alert-info">No hay dispositivos disponibles.</div>
+}
+else
+{
+    <p><strong>Total de dispositivos:</strong> @dispositivos.Count</p>
+    <table class="table table-striped table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Ubicación</th>
+                <th>Último Envío</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var dispositivo in dispositivos)
+            {
+                <tr>
+                    <td>@dispositivo.Id</td>
+                    <td>@dispositivo.Nombre</td>
+                    <td>@dispositivo.Ubicacion</td>
+                    <td>@dispositivo.UltimaLectura.ToString("g")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<InfoDispositivo> dispositivos = [];
+    private string? errorMessage;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            dispositivos = await Monitor.ObtenerDispositivosAsync();
+        }
+        catch(Exception ex)
+        {
+            errorMessage = $"Ha ocurrido un problema obteniendo la información de dispositivos!";
+        }
+    }
+}

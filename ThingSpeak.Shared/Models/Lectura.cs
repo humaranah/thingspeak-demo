@@ -46,10 +46,12 @@ public class Lectura
     /// <summary>
     /// Identificador único de la entrada de datos en ThingSpeak.
     /// </summary>
+    [JsonProperty("entry_id")]
     public int IdEntrada { get; set; }
 
     /// <summary>
     /// Fecha y hora de creación de la entrada de datos en ThingSpeak.
     /// </summary>
+    [JsonProperty("created_at")]
     public DateTime FechCreacion { get; set; }
 }

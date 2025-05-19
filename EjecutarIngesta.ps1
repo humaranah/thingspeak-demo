@@ -1,2 +1,2 @@
-dotnet build --project ThingSpeak.Ingestor/ThingSpeak.Ingestor.csproj --configuration Release --verbosity q
-dotnet run --project ThingSpeak.Ingestor/ThingSpeak.Ingestor.csproj --configuration Release --no-restore --no-build
+dotnet build --configuration Release --verbosity q
+dotnet run --project .\ThingSpeak.Ingestor --configuration Release --no-restore --no-build

@@ -1,0 +1,2 @@
+dotnet build --project ThingSpeak.Monitor/ThingSpeak.Monitor.csproj --configuration Release --verbosity q
+dotnet run --project ThingSpeak.Monitor/ThingSpeak.Monitor.csproj --configuration Release --no-restore --no-build
